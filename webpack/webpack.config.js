@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { webpack } = require('webpack')
 
 module.exports = {
     entry: path.resolve(__dirname, '..', './src/index.tsx'),
@@ -17,9 +18,10 @@ module.exports = {
                     },
                 ],
             },
+            { test: /\.txt$/, use: 'raw-loader' },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
+                test: /\.(sa|sc|c)ss$/,
+                use: ["style-loader", "css-loader", "sass-loader"]
             },
             {
                 test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
@@ -38,7 +40,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '..', './src/index.html'),
-        }),
+        })
     ],
     stats: 'errors-only',
 }

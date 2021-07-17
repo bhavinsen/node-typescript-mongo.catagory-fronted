@@ -1,0 +1,79 @@
+.category {
+    max-width: 1140px;
+    margin: 30px auto;
+    .title-text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #ccc;
+        padding: 0px 0px 17px 0px;
+        margin-bottom: 15px;
+        P{
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        button{
+            border: 1px solid #000;
+            color: #000;
+        }
+    }
+}
+.addCatagory {
+    .ant-modal-body {
+        .field-set {
+            .field-set-box{
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+                label {
+                    min-width: 60px;
+                    font-size: 16px;
+                }
+                input{
+                    width: 100%;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    padding: 4px 5px;
+                }
+                input:focus{
+                    outline: none;
+                    box-shadow: none;
+                }
+                input[type="number"]::-webkit-outer-spin-button,
+                input[type="number"]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width:992px) and (max-width:1199px){
+    .category {
+            max-width: 960px;
+    }
+}
+
+@media (min-width:768px) and (max-width:991px){
+    .category {
+            max-width: 720px;
+    }
+}
+
+@media (min-width:576px) and (max-width:767px){
+    .category {
+        max-width: 540px;
+    }
+}
+@media (min-width:320px) and (max-width:575px){
+    .category {
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 0px 15px;
+    }
+    .rst__tree{
+        overflow-x: auto;
+    }
+}
