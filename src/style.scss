@@ -77,3 +77,29 @@
         overflow-x: auto;
     }
 }
+
+.nodePrice{
+        position: absolute;
+    left: 8px;
+    top: 25px;
+    font-size: 10px;
+}
+.btnPrice{
+    span{
+
+        font-size: 11px;
+    }
+}
+.rst__rowLabel{
+    margin-bottom: 10px;
+}
+.rst__rowContentsDragDisabled{
+    margin-bottom: 0px;
+}
+.rst__rowTitle{
+    font-size: 12px;
+    margin-top: -10px !important;
+}
+.rst__rowTitleWithSubtitle{
+    margin-top: 10px !important;
+}

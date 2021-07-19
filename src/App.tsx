@@ -24,6 +24,7 @@ const App = () => {
     const [node, setNode] = useState<catagory>();
     const [catagoryData, setCatagoryData] = useState<{ title?: any, price?: any }>();
     const [forUpdate, setforUpdate] = useState<Boolean>(false);
+    const [changePrice, setChangePrice] = useState<{ model: Boolean | any, node: any }>();
 
     useEffect(() => {
         getAllCatagory();
@@ -66,6 +67,12 @@ const App = () => {
         } else message.error("Provide both field!");
     }
 
+    const onChangePrice = async () => {
+        await axios.get(URL + "updatecatagoryprice", { params: { catagoryID: changePrice?.node._id, price: catagoryData?.price || 0 } })
+        setChangePrice({ model: false, node: {} });
+        getAllCatagory();
+    }
+
     const setCatagoryValue = (name: any, value: any): void => {
         setCatagoryData({ ...catagoryData, [name]: value })
     }
@@ -89,19 +96,34 @@ const App = () => {
                 treeData={customData(catagory)}
                 canDrag={false}
                 generateNodeProps={(rowInfo: any) => {
-                    const { node } = rowInfo;
+                    const { node, parentNode } = rowInfo;
+                    const priceEditable = (): Boolean => {
+                        return !node.children.length
+                    }
                     return {
                         buttons: [
+                            <div hidden={!parentNode} className="nodePrice">{`Total Price:- ${node?.price}`}</div>,
                             <Button
+                                hidden={node?.price}
                                 className="btn btn-outline-success"
                                 style={{
-                                    verticalAlign: "middle"
+                                    verticalAlign: "middle",
                                 }}
                                 onClick={() => {
                                     setforUpdate(false)
                                     addSubCatagory(node)
                                 }}
-                            ><PlusCircleOutlined /></Button>
+                            >
+                                <PlusCircleOutlined />
+                            </Button>,
+                            <Button
+                                hidden={!priceEditable()}
+                                className="btn btn-outline-success btnPrice"
+                                style={{
+                                    verticalAlign: "middle"
+                                }}
+                                onClick={() => setChangePrice({ model: true, node })}
+                            >Add/Change Price</Button>
                         ]
                     };
                 }}
@@ -113,6 +135,14 @@ const App = () => {
                         <label htmlFor="">Title :- </label>
                         <input type="text" value={catagoryData?.title} name="title" onChange={({ target }) => setCatagoryValue(target.name, target.value)} />
                     </div>
+                    <div className="field-set-box">
+                        <label htmlFor="">Price :- </label>
+                        <input type="number" value={catagoryData?.price} name="price" onChange={({ target }) => setCatagoryValue(target.name, target.value)} />
+                    </div>
+                </div>
+            </Modal>
+            <Modal className="addCatagory" title="Add/Change Price" visible={changePrice?.model} onOk={onChangePrice} okText="Save Catagory" onCancel={() => setChangePrice({ model: false, node: {} })}>
+                <div className="field-set">
                     <div className="field-set-box">
                         <label htmlFor="">Price :- </label>
                         <input type="number" value={catagoryData?.price} name="price" onChange={({ target }) => setCatagoryValue(target.name, target.value)} />
