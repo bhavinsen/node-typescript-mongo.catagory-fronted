@@ -6,6 +6,7 @@ import { Button, message, Modal } from 'antd';
 import "./style.scss"
 import 'antd/dist/antd.css';
 const axios = require('axios');
+const URL = "http://localhost:4000/"
 
 type catagory = {
     price: number;
@@ -29,7 +30,7 @@ const App = () => {
     }, [])
 
     const getAllCatagory = async () => {
-        const { data } = await axios.get("http://localhost:4000/getallcatagorys")
+        const { data } = await axios.get(URL + "getallcatagorys")
         setCatagory(data.AllCatagorys);
     }
 
@@ -42,7 +43,7 @@ const App = () => {
     }, [catagory])
 
     const getPrice = async (id: String, i: any) => {
-        const { data } = await axios.get("http://localhost:4000/countCatagoryAmount?catagoryID=" + id)
+        const { data } = await axios.get(URL + "countCatagoryAmount?catagoryID=" + id)
         return data?.TotalAmountOfCatagory;
     }
 
@@ -54,11 +55,11 @@ const App = () => {
     const onOk = async () => {
         if (catagoryData?.title) {
             if (forUpdate) {
-                const { data } = await axios.post("http://localhost:4000/addcatagory", { title: catagoryData?.title, price: catagoryData?.price || 0 })
+                const { data } = await axios.post(URL + "addcatagory", { title: catagoryData?.title, price: catagoryData?.price || 0 })
                 await getAllCatagory();
                 setIsModalVisible(false);
             } else {
-                const { data } = await axios.post("http://localhost:4000/addcatagory", { catagoryID: node?._id, title: catagoryData?.title, price: catagoryData?.price || 0 })
+                const { data } = await axios.post(URL + "addcatagory", { catagoryID: node?._id, title: catagoryData?.title, price: catagoryData?.price || 0 })
                 await getAllCatagory();
                 setIsModalVisible(false);
             }

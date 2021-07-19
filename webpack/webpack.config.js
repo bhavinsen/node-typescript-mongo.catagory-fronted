@@ -1,6 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { webpack } = require('webpack')
+const webpack = require('webpack')
 
 module.exports = {
     entry: path.resolve(__dirname, '..', './src/index.tsx'),
@@ -40,7 +40,10 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '..', './src/index.html'),
-        })
+        }),
+        new webpack.DefinePlugin({
+            "API_URL": "http://localhost:4000/.com"
+        }),
     ],
     stats: 'errors-only',
 }
